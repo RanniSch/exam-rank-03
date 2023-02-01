@@ -1,63 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/01 15:56:37 by rschlott          #+#    #+#             */
+/*   Updated: 2023/02/01 15:56:40 by rschlott         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <unistd.h>
 //#include <stdlib.h>
 #include <stdarg.h>
 
-int ft_print_string(char *str)
+int	ft_print_string(char *str)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    if (!str)
-        str = "(null)";
-    while(str[++i])
-        write(1, &str[i], 1);
-    return (i);
+	i = -1;
+	if (!str)
+		str = "(null)";
+	while (str[++i])
+		write(1, &str[i], 1);
+	return (i);
 }
 
-int ft_put_digit(long long int number, int base)
+int	ft_put_digit(long long int number, int base)
 {
-    char *hexadecimal = "0123456789abcdef";
-    int length;
+	char	*hexadecimal;
+	int		length;
 
-    length = 0;
-    if (number < 0)
-    {
-        number *= -1;
-        length += write(1, "-", 1);
-    }
-    if (number >= base)
-        length += ft_put_digit(number / base, base);
-    length += write(1, &hexadecimal[number % base], 1);
-    return (length);
+	hexadecimal = "0123456789abcdef";
+	length = 0;
+	if (number < 0)
+	{
+		number *= -1;
+		length += write(1, "-", 1);
+	}
+	if (number >= base)
+		length += ft_put_digit(number / base, base);
+	length += write(1, &hexadecimal[number % base], 1);
+	return (length);
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-    int i;
-    int length;
-    va_list args;
+	int		i;
+	int		length;
+	va_list	args;
 
-    va_start(args, format);
-    i = -1;
-    length = 0;
-    while(format[++i])
-    {
-        if(format[i] == '%' && format[i + 1])
-        {
-            i++;
-            if(format[i] == 's')
-                length += ft_print_string(va_arg(args, char *));
-            else if (format[i] == 'd')
-                length += ft_put_digit((long long int)va_arg(args, int), 10);
-            else if (format[i] == 'x')
-                length += ft_put_digit((long long int)va_arg(args, unsigned int), 16);
-        }
-        else
-            length += write(1, &format[i], 1);
-    }
-    va_end(args);
-    return (length);
+	va_start(args, format);
+	i = -1;
+	length = 0;
+	while (format[++i])
+	{
+		if (format[i] == '%' && format[i + 1])
+		{
+			i++;
+			if (format[i] == 's')
+				length += ft_print_string(va_arg(args, char *));
+			else if (format[i] == 'd')
+				length += ft_put_digit((long long int)va_arg(args, int), 10);
+			else if (format[i] == 'x')
+				length += ft_put_digit((long long int)va_arg(args,
+							unsigned int), 16);
+		}
+		else
+			length += write(1, &format[i], 1);
+	}
+	va_end(args);
+	return (length);
 }
 
 /*int main()
