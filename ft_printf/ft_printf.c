@@ -6,7 +6,7 @@
 /*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:56:37 by rschlott          #+#    #+#             */
-/*   Updated: 2023/02/01 15:56:40 by rschlott         ###   ########.fr       */
+/*   Updated: 2023/02/02 12:07:45 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	ft_printf(const char *format, ...)
 			else if (format[i] == 'x')
 				length += ft_put_digit((long long int)va_arg(args,
 							unsigned int), 16);
+			else if (format[i] == '%')
+				length += write(1, &format[i], 1);
 		}
 		else
 			length += write(1, &format[i], 1);
