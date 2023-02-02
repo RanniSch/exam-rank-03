@@ -5,8 +5,10 @@
 
 Allowed Functions
 read, free and malloc
+
 Prototype
 char	  *get_next_line(int fd);
+
 The Program
 LINE
 
