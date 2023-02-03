@@ -6,13 +6,35 @@
 /*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:04:26 by rschlott          #+#    #+#             */
-/*   Updated: 2023/02/01 16:34:42 by rschlott         ###   ########.fr       */
+/*   Updated: 2023/02/02 18:47:28 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
+{
+    int     i = 0;
+    int     rd = 0;
+    char    character;
+    char     *buffer = malloc(10000);
+
+    while ((rd = read(fd, &character, buffersize - buffersize + 1)) > 0)
+    {
+        buffer[i++] = character;
+        if (character == '\n')
+            break;
+    }
+    if ((!buffer[i - 1] && !rd) || rd == -1)
+    {
+        free(buffer);
+        return (NULL);
+    }
+    buffer[i] =  '\0';
+    return(buffer);
+}
+
+/*char	*get_next_line(int fd)
 {
 	char	*string;
 	char	*copy;
@@ -27,7 +49,7 @@ char	*get_next_line(int fd)
 	}
 	free(string);
 	return (NULL);
-}
+}*/
 
 /*
 * Bedingung ? Ausdruck1 : Ausdruck2
@@ -45,7 +67,7 @@ char	*get_next_line(int fd)
     return (copy > string) ? (*copy = 0, string) : (free(string), NULL);
 }*/
 
-/*#include <fcntl.h>
+#include <fcntl.h>
 #include "get_next_line.h"
 #include <stdio.h>
 
@@ -67,4 +89,4 @@ int	main(void)
     printf("%s", line);
     free (line);
     close(fd);
-}*/
+}
