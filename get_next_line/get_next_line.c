@@ -6,7 +6,7 @@
 /*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:04:26 by rschlott          #+#    #+#             */
-/*   Updated: 2023/02/02 18:47:28 by rschlott         ###   ########.fr       */
+/*   Updated: 2023/02/07 10:02:30 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char *get_next_line(int fd)
     char    character;
     char     *buffer = malloc(10000);
 
-    while ((rd = read(fd, &character, buffersize - buffersize + 1)) > 0)
+    while ((rd = read(fd, &character, BUFFER_SIZE - BUFFER_SIZE + 1)) > 0)
     {
         buffer[i++] = character;
         if (character == '\n')
